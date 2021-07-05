@@ -20,18 +20,24 @@ import static io.restassured.RestAssured.given;
 class Home3WireMockTestPostCreate {
 
     private static WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.options().port(5050));
+//    private static WireMockServer wireMockServer2 = new WireMockServer(WireMockConfiguration.options().port(5051));
+
 
     @BeforeAll
     public static void setUpServer(){
         wireMockServer.start();
-
+//        wireMockServer2.start();
 
         WireMock.configureFor("localhost", 5050);
         WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/users"))
-                        .withRequestBody(equalToJson("{\n" +
-                                "    \"name\": \"morpheus\",\n" +
-                                "    \"job\": \"leader\"\n" +
-                                "}"))
+                .withRequestBody(equalToJson("{\n" +
+                        "    \"name\": \"morpheus\",\n" +
+                        "    \"job\": \"leader\"\n" +
+                        "}"))
+        );
+
+        WireMock.configureFor("localhost", 5050);
+        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/users"))
                         .willReturn(WireMock.aResponse()
                         .withStatus(201)
                         .withBody("{\n" +
@@ -40,6 +46,8 @@ class Home3WireMockTestPostCreate {
                                 "    \"id\": \"678\",\n" +
                                 "    \"createdAt\": \"2021-07-05T18:01:32.235Z\"\n" +
                                 "}")));
+
+
 
 
     }
