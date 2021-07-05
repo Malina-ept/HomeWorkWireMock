@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static io.restassured.RestAssured.given;
 
 @SpringBootTest
-class Home1WireMockTest {
+class Home1WireMockTestGetSingleResource {
 
     private static WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.options().port(5050));
 
@@ -22,7 +22,7 @@ class Home1WireMockTest {
         wireMockServer.start();
 
         WireMock.configureFor("localhost", 5050);
-        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/users/2"))
+        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/unknown/2"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200)
                         .withBody("{\n" +
@@ -48,7 +48,7 @@ class Home1WireMockTest {
                 .contentType(ContentType.JSON)
                 .when()
 //				.get("https://reqres.in/api/unknown/2")
-                .get("http://localhost:5050/api/users/2")
+                .get("http://localhost:5050/api/unknown/2")
                 .then()
                 .extract().response();
 
